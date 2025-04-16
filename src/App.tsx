@@ -7,7 +7,6 @@ import MainLayout from './components/layout/main-layout';
 import Dashboard from './pages/dashboard';
 import Penalties from './pages/penalties';
 
-// Simple auth guard component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAppSelector(state => state.auth);
   
@@ -18,7 +17,6 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-// Separate routes component without its own BrowserRouter
 const AppRoutes = () => {
   const { isAuthenticated } = useAppSelector(state => state.auth);
 

@@ -3,27 +3,30 @@ import { cn } from "@/lib/utils";
 import { 
   LayoutDashboard, 
   AlertTriangle, 
-  Users, 
-  Settings,
-  LogOut
+  LogOut,
+  Menu,
+  ChevronLeft
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useAppDispatch } from "@/store";
 import { logout } from "@/store/slices/auth";
+import { useState } from "react";
 
 interface SidebarItemProps {
   icon: React.ReactNode;
   label: string;
   href: string;
   isActive?: boolean;
+  isExpanded?: boolean;
 }
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
   icon,
   label,
   href,
-  isActive
+  isActive,
+  isExpanded = true
 }) => {
   return (
     <Link to={href} className="w-full">
@@ -31,11 +34,13 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         variant="ghost"
         className={cn(
           "w-full justify-start gap-2 px-2",
-          isActive && "bg-accent"
+          isActive && "bg-accent",
+          !isExpanded && "justify-center px-0"
         )}
+        title={label}
       >
         {icon}
-        <span>{label}</span>
+        {isExpanded && <span>{label}</span>}
       </Button>
     </Link>
   );
@@ -45,16 +50,36 @@ export default function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [isExpanded, setIsExpanded] = useState(true);
   
   const handleLogout = () => {
     dispatch(logout());
     navigate("/login");
   };
 
+  const toggleSidebar = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
-    <div className="flex h-full w-64 flex-col border-r bg-background">
-      <div className="flex h-14 items-center px-4 border-b">
-        <h2 className="text-lg font-semibold">Seglico</h2>
+    <div className={cn(
+      "flex h-full flex-col border-r bg-background transition-all duration-300 shadow-sm",
+      isExpanded ? "w-64" : "w-16"
+    )}>
+      <div className="flex h-14 items-center px-4 border-b justify-between">
+        {isExpanded ? (
+          <h2 className="text-lg font-bold">SEGLICO</h2>
+        ) : (
+          <span className="text-lg font-bold mx-auto">S</span>
+        )}
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="p-0 h-8 w-8" 
+          onClick={toggleSidebar}
+        >
+          {isExpanded ? <ChevronLeft size={18} /> : <Menu size={18} />}
+        </Button>
       </div>
       <div className="flex-1 overflow-auto py-2">
         <nav className="grid gap-1 px-2">
@@ -63,24 +88,14 @@ export default function Sidebar() {
             label="Dashboard"
             href="/dashboard"
             isActive={location.pathname === "/dashboard"}
+            isExpanded={isExpanded}
           />
           <SidebarItem
             icon={<AlertTriangle className="h-4 w-4" />}
             label="Sanciones"
             href="/penalties"
             isActive={location.pathname.includes("/penalties")}
-          />
-          <SidebarItem
-            icon={<Users className="h-4 w-4" />}
-            label="Usuarios"
-            href="/users"
-            isActive={location.pathname.includes("/users")}
-          />
-          <SidebarItem
-            icon={<Settings className="h-4 w-4" />}
-            label="Configuración"
-            href="/settings"
-            isActive={location.pathname.includes("/settings")}
+            isExpanded={isExpanded}
           />
         </nav>
       </div>
@@ -88,11 +103,15 @@ export default function Sidebar() {
         <Separator className="my-2" />
         <Button 
           variant="ghost" 
-          className="w-full justify-start gap-2 px-2"
+          className={cn(
+            "w-full gap-2",
+            isExpanded ? "justify-start px-2" : "justify-center px-0"
+          )}
           onClick={handleLogout}
+          title="Cerrar sesión"
         >
           <LogOut className="h-4 w-4" />
-          <span>Cerrar sesión</span>
+          {isExpanded && <span>Cerrar sesión</span>}
         </Button>
       </div>
     </div>

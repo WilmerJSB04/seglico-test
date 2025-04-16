@@ -7,7 +7,7 @@ export default function MainLayout() {
     <div className="flex h-screen">
       <Sidebar />
       <main className="flex-1 overflow-auto">
-        <div className="flex items-center justify-end p-4 border-b">
+        <div className="flex items-center justify-end p-4 border-b shadow-sm">
           <ThemeToggle />
         </div>
         <div className="p-6">

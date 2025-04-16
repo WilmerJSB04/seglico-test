@@ -47,7 +47,7 @@ export default function Penalties() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full"
         />
-        <Button type="submit" size="icon">
+        <Button type="submit" size="icon" className=" px-3">
           <Search className="h-4 w-4" />
         </Button>
       </div>

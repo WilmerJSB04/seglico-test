@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { User, AuthState } from '@/types';
+import { AuthState } from '@/types';
 
 const initialState: AuthState = {
   isAuthenticated: localStorage.getItem('isAuthenticated') === 'true',
@@ -13,10 +13,10 @@ export const login = createAsyncThunk(
     'auth/login',
     async ({ username, password }: { username: string; password: string }, { rejectWithValue }) => {
     try {
-        if (username === 'admin' && password === 'qwerty') {
+        if (username === 'admin' && password === 'password') {
             await new Promise(resolve => setTimeout(resolve, 1000));   
             localStorage.setItem('isAuthenticated', 'true');
-            return { username }; 
+            return { username }; // Return user data
         } else {
             return rejectWithValue('Invalid credentials');
         }
@@ -47,9 +47,9 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(login.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(login.fulfilled, (state, action: PayloadAction<{ username: string }>) => {
         state.isAuthenticated = true;
-        state.user = action.payload;
+        state.user = { username: action.payload.username, id: '', roles: [] }; // Adjust to match User type
         state.loading = false;
       })
       .addCase(login.rejected, (state, action) => {
