@@ -8,15 +8,14 @@ const initialState: AuthState = {
   error: null,
 };
 
-// Login thunk
 export const login = createAsyncThunk(
     'auth/login',
     async ({ username, password }: { username: string; password: string }, { rejectWithValue }) => {
     try {
-        if (username === 'admin' && password === 'password') {
+        if (username === 'admin' && password === 'qwerty') {
             await new Promise(resolve => setTimeout(resolve, 1000));   
             localStorage.setItem('isAuthenticated', 'true');
-            return { username }; // Return user data
+            return { username }; 
         } else {
             return rejectWithValue('Invalid credentials');
         }
@@ -27,7 +26,6 @@ export const login = createAsyncThunk(
   }
 );
 
-// Auth slice
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -49,7 +47,7 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action: PayloadAction<{ username: string }>) => {
         state.isAuthenticated = true;
-        state.user = { username: action.payload.username, id: '', roles: [] }; // Adjust to match User type
+        state.user = { username: action.payload.username, id: '', roles: [] }; 
         state.loading = false;
       })
       .addCase(login.rejected, (state, action) => {
