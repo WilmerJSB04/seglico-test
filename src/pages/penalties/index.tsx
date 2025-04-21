@@ -26,8 +26,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "@/components/ui/use-toast";
 import FilterBar from "@/components/common/FilterBar";
+import { useNavigate } from "react-router-dom";
 
 export default function Penalties() {
+  const navigate = useNavigate();
   const [penalties, setPenalties] = useState<Penalty[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState<Partial<PenaltyFilteringParams>>({
@@ -36,7 +38,6 @@ export default function Penalties() {
   const [penaltyToDelete, setPenaltyToDelete] = useState<Penalty | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-  // Get filter options from service
   const filterOptions = useMemo(() => {
     return {
       projects: PenaltyService.getProjectOptions(),
@@ -62,12 +63,10 @@ export default function Penalties() {
     }
   };
 
-  // Handle filter changes from FilterBar
   const handleFiltersChange = (newFilters: Record<string, any>) => {
-    setFilters(prev => ({
-      ...prev,
+    setFilters( ({
       ...newFilters,
-      page: 1, // Reset to first page on filter change
+      page: 1, 
     }));
   };
 
@@ -75,7 +74,6 @@ export default function Penalties() {
     return format(new Date(date), 'dd/MM/yyyy', { locale: es });
   };
 
-  // Get badge variant based on penalty type
   const getPenaltyBadgeVariant = (typeId: number) => {
     switch (typeId) {
       case PenaltyType.SUSPENSION: return "destructive";
@@ -98,8 +96,9 @@ export default function Penalties() {
       const success = await PenaltyService.deletePenalty(penaltyToDelete.id);
       if (success) {
         toast({
-          title: "Sanción eliminada",
+          title: "¡Sanción eliminada!",
           description: `La sanción ${penaltyToDelete.identifier} ha sido eliminada correctamente.`,
+          variant: "default",
         });
         loadPenalties(); 
       } else {
@@ -122,11 +121,19 @@ export default function Penalties() {
     }
   };
 
+  const handleCreatePenalty = () => {
+    navigate("/penalties/create");
+  };
+
+  const handleViewPenalty = (id: number) => {
+    navigate(`/penalties/${id}/edit`);
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Sanciones</h1>
-        <Button>
+        <Button onClick={handleCreatePenalty}>
           <Plus className="h-4 w-4 mr-2" />
           Nueva Sanción
         </Button>
@@ -138,7 +145,7 @@ export default function Penalties() {
         initialFilters={filters}
         filterOptions={filterOptions}
         onFiltersChange={handleFiltersChange}
-        searchPlaceholder="Buscar por identificador o causa..."
+        searchPlaceholder="Buscar..."
       />
 
       <div className="rounded-md border">
@@ -187,7 +194,11 @@ export default function Penalties() {
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
-                      <Button variant="ghost" size="sm">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => handleViewPenalty(penalty.id)}
+                      >
                         <Eye className="h-4 w-4" />
                       </Button>
                       <Button 

@@ -31,13 +31,15 @@
     "react": "^18.2.0",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.55.0",
+    "react-hook-form": "^7.53.0",
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.20.0",
     "tailwind-merge": "^2.1.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@hookform/resolvers": "^5.0.1",
     "@types/node": "^20.10.4",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",

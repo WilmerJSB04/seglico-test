@@ -1,19 +1,24 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./sidebar";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
+import Header from "./header";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function MainLayout() {
   return (
-    <div className="flex h-screen">
-      <Sidebar />
-      <main className="flex-1 overflow-auto">
-        <div className="flex items-center justify-end p-4 border-b shadow-sm">
-          <ThemeToggle />
-        </div>
-        <div className="p-6">
+    <div className="flex h-screen overflow-hidden">
+      {/* Fixed sidebar with its own scrolling */}
+      <div className="h-screen flex-shrink-0 overflow-y-auto border-r">
+        <Sidebar />
+      </div>
+      
+      {/* Main content area with its own scrolling */}
+      <div className="flex-1 flex flex-col h-screen overflow-hidden">
+        <Header />
+        <main className="flex-1 overflow-y-auto p-6">
           <Outlet />
-        </div>
-      </main>
+        </main>
+        <Toaster />
+      </div>
     </div>
   );
 }

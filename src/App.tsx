@@ -6,6 +6,9 @@ import Login from './pages/auth/login';
 import MainLayout from './components/layout/main-layout';
 import Dashboard from './pages/dashboard';
 import Penalties from './pages/penalties';
+import CreatePenalty from './pages/penalties/create';
+import EditPenalty from './pages/penalties/[id]/edit';
+import { Toaster } from './components/ui/toaster'; 
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAppSelector(state => state.auth);
@@ -30,26 +33,28 @@ const AppRoutes = () => {
         path="/" 
         element={
           <ProtectedRoute>
-            <MainLayout />
+        <MainLayout />
           </ProtectedRoute>
         }
       >
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="penalties" element={<Penalties />} />
+        <Route path="penalties/:id/edit" element={<EditPenalty />} />
+        <Route path="penalties/create" element={<CreatePenalty />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Route>
     </Routes>
   );
 };
 
-// Root App component with a single Router
 function App() {
   return (
     <Provider store={store}>
       <ThemeProvider defaultTheme="system" storageKey="seglico-ui-theme">
         <BrowserRouter>
           <AppRoutes />
+          <Toaster />
         </BrowserRouter>
       </ThemeProvider>
     </Provider>

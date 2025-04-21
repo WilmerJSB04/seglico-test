@@ -1,4 +1,4 @@
-import { Penalty, PenaltyFilteringParams } from '@/types/penalties';
+import { DocumentAttachments, Penalty, PenaltyFilteringParams } from '@/types/penalties';
 
 export enum PenaltyType {
   SUSPENSION = 1,
@@ -252,5 +252,50 @@ export const PenaltyService = {
       console.error("Error deleting penalty:", error);
       return false;
     }
+  },
+
+  // Create a new penalty
+  createPenalty: async (penalty: Partial<Penalty>): Promise<Penalty> => {
+    // For now, use mock data
+    const newPenalty: Penalty = {
+      id: Math.max(...mockPenalties.map(p => p.id)) + 1,
+      identifier: penalty.identifier || `SAN-${new Date().getFullYear()}-${(Math.floor(Math.random() * 900) + 100)}`,
+      penalty_date: new Date(penalty.penalty_date || new Date()),
+      ocurrency_date: new Date(penalty.ocurrency_date || new Date()),
+      days_quantity: penalty.days_quantity || 0,
+      until_date: new Date(penalty.until_date || new Date()),
+      cause: penalty.cause || '',
+      employee_discharge: penalty.employee_discharge || '',
+      penalty_type_id: penalty.penalty_type_id || 1,
+      penalty_reason_id: penalty.penalty_reason_id || 1,
+      project_id: penalty.project_id || 1,
+      employee_id: penalty.employee_id || 1,
+      responsible_id: penalty.responsible_id || 1,
+      document_attachments: penalty.document_attachments as DocumentAttachments[] || [],
+      triggers_temporary_state: penalty.triggers_temporary_state || false,
+      temporary_state_id: penalty.temporary_state_id || 0
+    };
+    
+    mockPenalties.unshift(newPenalty);
+    return newPenalty;
+  },
+  
+  // Update an existing penalty
+  updatePenalty: async (id: number, penalty: Partial<Penalty>): Promise<Penalty | undefined> => {
+
+    const index = mockPenalties.findIndex(p => p.id === id);
+    if (index === -1) return undefined;
+    
+    const updatedPenalty: Penalty = {
+      ...mockPenalties[index],
+      ...penalty,
+      penalty_date: new Date(penalty.penalty_date || mockPenalties[index].penalty_date),
+      ocurrency_date: new Date(penalty.ocurrency_date || mockPenalties[index].ocurrency_date),
+      until_date: new Date(penalty.until_date || mockPenalties[index].until_date),
+      document_attachments: penalty.document_attachments as DocumentAttachments[] || mockPenalties[index].document_attachments
+    };
+    
+    mockPenalties[index] = updatedPenalty;
+    return updatedPenalty;
   }
 };
