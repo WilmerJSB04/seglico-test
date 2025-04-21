@@ -23,25 +23,7 @@ export default function Header() {
     <header className="sticky top-0 z-30 flex items-center justify-end px-4 py-2 border-b shadow-sm bg-background">
 
       <div className="flex items-center gap-4">
-        {/* <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="relative">
-              <BellIcon className="h-5 w-5" />
-              <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500 hidden"></span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-80">
-            <DropdownMenuLabel>Notificaciones</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <div className="py-2 px-4 text-sm text-center text-muted-foreground">
-              No hay notificaciones nuevas
-            </div>
-          </DropdownMenuContent>
-        </DropdownMenu> */}
-
-        {/* Theme Toggle */}
         <ThemeToggle />
-          {/* User Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative px-3 gap-2 flex py-2 justify-start rounded-full">
