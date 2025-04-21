@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { PenaltyForm } from "@/components/penalties/PenaltyForm";
+import { PenaltyForm } from "@/components/PenaltyForm";
 import { Penalty } from "@/types/penalties";
 import { PenaltyService } from "@/services/penalty";
 import { Skeleton } from "@/components/ui/skeleton";

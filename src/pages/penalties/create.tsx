@@ -1,4 +1,4 @@
-import { PenaltyForm } from "@/components/penalties/PenaltyForm";
+import { PenaltyForm } from "@/components/PenaltyForm";
 
 export default function CreatePenalty() {
   return <PenaltyForm isEdit={false} />;
