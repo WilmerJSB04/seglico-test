@@ -5,9 +5,9 @@ import { ThemeProvider } from './providers/theme-provider';
 import Login from './pages/auth/login';
 import MainLayout from './components/layout/main-layout';
 import Dashboard from './pages/dashboard';
-import Penalties from './pages/penalties';
-import CreatePenalty from './pages/penalties/create';
-import EditPenalty from './pages/penalties/edit';
+import Penalties from './pages/dashboard/penalties';
+import CreatePenalty from './pages/dashboard/penalties/create';
+import EditPenalty from './pages/dashboard/penalties/edit';
 import { Toaster } from './components/ui/toaster'; 
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {

@@ -62,6 +62,9 @@ const penaltyFormSchema = z.object({
   employee_id: z.number({
     required_error: "El operario es obligatorio",
   }),
+  responsible_id: z.number({
+    required_error: "El responsable es obligatorio",
+  }),
   document_attachments: z.array(z.any()).optional(),
   triggers_temporary_state: z.boolean().default(false),
   temporary_state_id: z.number().optional(),
@@ -274,6 +277,38 @@ export function PenaltyForm({ penalty, isEdit = false }: PenaltyFormProps) {
                                 value={employee.value.toString()}
                                 >
                                 {employee.label}
+                                </SelectItem>
+                            ))}
+                            </SelectContent>
+                        </Select>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+
+                    <FormField
+                    control={form.control}
+                    name="responsible_id"
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormLabel>Responsable</FormLabel>
+                        <Select
+                            value={field.value?.toString()}
+                            onValueChange={(value) => field.onChange(parseInt(value))}
+                            disabled={loading}
+                        >
+                            <FormControl>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Selecciona un responsable" />
+                            </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                            {PenaltyService.getEmployeeOptions().map((responsible) => (
+                                <SelectItem
+                                key={responsible.value}
+                                value={responsible.value.toString()}
+                                >
+                                {responsible.label}
                                 </SelectItem>
                             ))}
                             </SelectContent>
