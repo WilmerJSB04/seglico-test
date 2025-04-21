@@ -7,7 +7,7 @@ import MainLayout from './components/layout/main-layout';
 import Dashboard from './pages/dashboard';
 import Penalties from './pages/penalties';
 import CreatePenalty from './pages/penalties/create';
-import EditPenalty from './pages/penalties/[id]/edit';
+import EditPenalty from './pages/penalties/edit';
 import { Toaster } from './components/ui/toaster'; 
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -40,7 +40,7 @@ const AppRoutes = () => {
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="penalties" element={<Penalties />} />
-        <Route path="penalties/:id/edit" element={<EditPenalty />} />
+        <Route path="penalties/edit/:id" element={<EditPenalty />} />
         <Route path="penalties/create" element={<CreatePenalty />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Route>

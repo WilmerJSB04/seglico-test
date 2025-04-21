@@ -1,4 +1,4 @@
-import { BellIcon, UserIcon } from "lucide-react";
+import { UserIcon } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +23,7 @@ export default function Header() {
     <header className="sticky top-0 z-30 flex items-center justify-end px-4 py-2 border-b shadow-sm bg-background">
 
       <div className="flex items-center gap-4">
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="relative">
               <BellIcon className="h-5 w-5" />
@@ -37,24 +37,23 @@ export default function Header() {
               No hay notificaciones nuevas
             </div>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
 
         {/* Theme Toggle */}
         <ThemeToggle />
-
-        {/* User Name Display */}
-        <span className="text-sm font-medium hidden md:block">
-          {username}
-        </span>
-
-        {/* User Menu */}
+          {/* User Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-9 w-9 rounded-full">
-              <Avatar className="h-9 w-9">
+            <Button variant="ghost" className="relative px-3 gap-2 flex py-2 justify-start rounded-full">
+              <Avatar className="h-8 w-8 border" >
                 <AvatarFallback>{userInitials}</AvatarFallback>
               </Avatar>
+              <span className="text-sm font-medium hidden md:block">
+                {username}
+              </span>
+              
             </Button>
+            
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
@@ -68,6 +67,8 @@ export default function Header() {
             <DropdownMenuItem>Cerrar sesión</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        {/* User Name Display */}
+        
       </div>
     </header>
   );

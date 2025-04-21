@@ -126,14 +126,14 @@ export default function Penalties() {
   };
 
   const handleViewPenalty = (id: number) => {
-    navigate(`/penalties/${id}/edit`);
+    navigate(`/penalties/edit/${id}`);
   };
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Sanciones</h1>
-        <Button onClick={handleCreatePenalty}>
+        <Button onClick={handleCreatePenalty} >
           <Plus className="h-4 w-4 mr-2" />
           Nueva Sanción
         </Button>

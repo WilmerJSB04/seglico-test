@@ -60,10 +60,7 @@ const penaltyFormSchema = z.object({
     required_error: "El proyecto es obligatorio",
   }),
   employee_id: z.number({
-    required_error: "El empleado es obligatorio",
-  }),
-  responsible_id: z.number({
-    required_error: "El responsable es obligatorio",
+    required_error: "El operario es obligatorio",
   }),
   document_attachments: z.array(z.any()).optional(),
   triggers_temporary_state: z.boolean().default(false),
@@ -206,12 +203,12 @@ export function PenaltyForm({ penalty, isEdit = false }: PenaltyFormProps) {
     <div className="space-y-4">
         <div className="flex items-center">
             <Button 
-            variant="ghost" 
+            variant="outline" 
             onClick={() => navigate("/penalties")}
             className="mr-4"
             >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Volver
+             Volver
             </Button>
             <h1 className="text-2xl font-bold">
             {isEdit ? "Editar sanción" : "Nueva sanción"}
@@ -259,7 +256,7 @@ export function PenaltyForm({ penalty, isEdit = false }: PenaltyFormProps) {
                     name="employee_id"
                     render={({ field }) => (
                         <FormItem>
-                        <FormLabel>Empleado</FormLabel>
+                        <FormLabel>Operario</FormLabel>
                         <Select
                             value={field.value?.toString()}
                             onValueChange={(value) => field.onChange(parseInt(value))}
@@ -267,7 +264,7 @@ export function PenaltyForm({ penalty, isEdit = false }: PenaltyFormProps) {
                         >
                             <FormControl>
                             <SelectTrigger>
-                                <SelectValue placeholder="Selecciona un empleado" />
+                                <SelectValue placeholder="Selecciona un operario" />
                             </SelectTrigger>
                             </FormControl>
                             <SelectContent>
@@ -335,38 +332,6 @@ export function PenaltyForm({ penalty, isEdit = false }: PenaltyFormProps) {
                     )}
                     />
 
-                    {/* Responsible */}
-                    <FormField
-                    control={form.control}
-                    name="responsible_id"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Responsable</FormLabel>
-                        <Select
-                            value={field.value?.toString()}
-                            onValueChange={(value) => field.onChange(parseInt(value))}
-                            disabled={loading}
-                        >
-                            <FormControl>
-                            <SelectTrigger>
-                                <SelectValue placeholder="Selecciona un responsable" />
-                            </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                            {PenaltyService.getEmployeeOptions().map((employee) => (
-                                <SelectItem
-                                key={employee.value}
-                                value={employee.value.toString()}
-                                >
-                                {employee.label}
-                                </SelectItem>
-                            ))}
-                            </SelectContent>
-                        </Select>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                    />
                 </div>
                 </CardContent>
             </Card>
