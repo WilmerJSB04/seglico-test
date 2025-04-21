@@ -63,7 +63,7 @@ export default function Sidebar() {
 
   return (
     <div className={cn(
-      "flex h-full flex-col border-r bg-background transition-all duration-300 shadow-sm",
+      "flex flex-col border-r bg-background transition-all duration-300 shadow-sm",
       isExpanded ? "w-64" : "w-16"
     )}>
       <div className="flex h-14 items-center px-4 border-b justify-between">
